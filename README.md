@@ -1,3 +1,2 @@
-# WDD 330 W02 -work
-
+# WDD 330 - projects
 
