@@ -1,0 +1,17 @@
+{
+  "name": "wdd330-w02-sleep-outside",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src",
+    "format": "prettier --write src"
+  },
+  "devDependencies": {
+    "vite": "^7.1.5",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.2"
+  }
+}

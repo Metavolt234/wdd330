@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Outside | Checkout</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">Sleep Outside</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Products</a>
+        <a href="cart/index.html">Cart</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container page-space">
+    <div class="page-heading">
+      <p class="eyebrow">Almost there</p>
+      <h1>Checkout</h1>
+      <p>Enter your details to complete your order.</p>
+    </div>
+    <form id="checkout-form" class="checkout-card">
+      <div class="form-grid">
+        <label>First name<input name="firstName" required autocomplete="given-name"></label>
+        <label>Last name<input name="lastName" required autocomplete="family-name"></label>
+        <label class="full-width">Email<input type="email" name="email" required autocomplete="email"></label>
+        <label>Address<input name="address" required autocomplete="street-address"></label>
+        <label>City<input name="city" required autocomplete="address-level2"></label>
+      </div>
+      <button class="button" type="submit">Place Order</button>
+      <p id="checkout-message" class="success-message" role="status"></p>
+    </form>
+  </main>
+  <footer class="site-footer"><p>&copy; 2026 Sleep Outside</p></footer>
+  <script type="module" src="js/checkout.js"></script>
+</body>
+</html>
