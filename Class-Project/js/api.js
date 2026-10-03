@@ -1,0 +1,1 @@
+export async function getUgandaReference(){const res=await fetch('https://restcountries.com/v3.1/name/uganda?fullText=true');if(!res.ok)throw new Error('Country reference unavailable');return res.json();}

@@ -1,0 +1,6 @@
+[
+  {"id":"bwindi","name":"Bwindi Impenetrable National Park","category":"national-park","region":"Southwest Uganda","latitude":-1.052,"longitude":29.716,"rating":4.8,"reviews":124},
+  {"id":"murchison","name":"Murchison Falls National Park","category":"national-park","region":"Northwest Uganda","latitude":2.274,"longitude":31.793,"rating":4.7,"reviews":98},
+  {"id":"bunyonyi","name":"Lake Bunyonyi","category":"lake","region":"Southwest Uganda","latitude":-1.283,"longitude":29.925,"rating":4.6,"reviews":76},
+  {"id":"queen","name":"Queen Elizabeth National Park","category":"national-park","region":"Western Uganda","latitude":-0.15,"longitude":30.0,"rating":4.7,"reviews":103}
+]

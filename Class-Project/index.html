@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Uganda Travel Explorer - discover destinations, attractions and weather across Uganda.">
+  <title>Uganda Travel Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="Uganda Travel Explorer home">
+    <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span><strong>Uganda</strong><small>Travel Explorer</small></span>
+  </a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav class="main-nav" id="mainNav">
+    <a class="active" href="index.html">Home</a><a href="destination.html">Destinations</a><a href="#weather">Weather</a><a href="#attractions">Attractions</a><a href="about.html">About</a>
+  </nav>
+  <div class="header-actions"><label class="mini-search"><span>⌕</span><input id="headerSearch" placeholder="Search destinations..." aria-label="Search destinations"></label><a href="favorites.html" class="icon-btn" title="Favorites">♡</a><a href="about.html" class="profile-icon" title="About">●</a></div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-photo scenic-placeholder" role="img" aria-label="Uganda mountain landscape"></div>
+    <div class="hero-copy"><h1>Explore Uganda</h1><p>Discover amazing destinations, check the weather,<br class="desktop-only"> find attractions and plan your perfect trip.</p>
+      <form class="search-box" id="searchForm"><span>⌕</span><input id="searchInput" autocomplete="off" placeholder="Search destinations..." aria-label="Search destinations"><button>Search</button></form>
+    </div>
+  </section>
+
+  <section class="quick-grid" id="attractions">
+    <a href="destination.html" class="quick-card"><span class="quick-icon">●</span><strong>Top Destinations</strong><small>Explore Uganda's best<br>places to visit</small></a>
+    <a href="#weather" class="quick-card"><span class="quick-icon sun">☀</span><strong>Weather</strong><small>Check current & forecast<br>weather</small></a>
+    <a href="destination.html?category=outdoor" class="quick-card"><span class="quick-icon">★</span><strong>Attractions</strong><small>Find interesting places<br>to visit</small></a>
+    <a href="about.html" class="quick-card"><span class="quick-icon">i</span><strong>Travel Info</strong><small>Tips, guides and more</small></a>
+  </section>
+
+  <section class="section-heading"><div><h2>Popular Destinations</h2></div><a href="destination.html">View All Destinations <span>→</span></a></section>
+  <section class="destination-grid" id="destinationGrid" aria-live="polite"></section>
+
+  <section class="lower-grid" id="weather">
+    <article class="weather-panel">
+      <div class="weather-main"><div><span class="weather-title">☀ Current Weather</span><small>● Kampala</small></div><strong id="temperature">--°C</strong><span id="weatherText">Loading weather...</span></div>
+      <div class="forecast" id="forecast"></div>
+    </article>
+    <article class="discover-panel"><div class="discover-image scenic-placeholder"></div><div><h3>Discover Uganda's Beauty</h3><p>From mountains to wildlife, explore the best of Uganda.</p><a class="primary-btn" href="destination.html">Explore More →</a></div></article>
+  </section>
+</main>
+
+<footer class="site-footer"><div class="footer-brand"><span class="brand-mark"><i></i><i></i><i></i></span><span><strong>Uganda</strong><small>Travel Explorer</small></span></div><div class="footer-nav"><a href="index.html">Home</a><a href="destination.html">Destinations</a><a href="#weather">Weather</a><a href="destination.html?category=outdoor">Attractions</a><a href="about.html">About</a></div><div class="socials"><span>f</span><span>◎</span><span>▶</span><small>© 2026 Uganda Travel Explorer. All rights reserved.</small></div></footer>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

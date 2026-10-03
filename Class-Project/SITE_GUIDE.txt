@@ -1,0 +1,67 @@
+UGANDA TRAVEL EXPLORER - SITE BUILD GUIDE
+==========================================
+
+SOURCE
+------
+This website follows the WDD 330 Uganda Travel Explorer Project Proposal and its desktop/mobile wireframes.
+The implementation keeps the wireframe's visual order: header/navigation, Explore Uganda hero/search, four quick-action cards, Popular Destinations, weather/discovery area, and footer.
+
+DESIGN RULES
+------------
+- Desktop: horizontal header navigation and four-column destination cards.
+- Mobile: hamburger navigation, stacked hero/search, 2x2 quick actions, and compact one-column destination cards.
+- The hamburger button opens/closes the mobile navigation and changes aria-expanded.
+- Primary visual direction: forest/natural dark green, warm gold accent, light neutral backgrounds, rounded cards, subtle shadows.
+- Typography: Inter, clean sans-serif.
+- Destination cards contain image area, favorite control, title, category, region and rating.
+
+PAGES
+-----
+index.html        Home/discovery page
+ destination.html Destination search/filter page
+favorites.html    Local-storage favorites
+about.html        Project/application information
+
+JAVASCRIPT MODULES
+------------------
+js/main.js          Startup and shared behavior
+js/api.js           REST Countries request helper
+js/destinations.js  Local destination dataset and lookup
+js/favorites.js     Favorites behavior is handled through localStorage in ui.js
+js/weather.js       Open-Meteo weather request
+js/ui.js            Navigation, cards, search and favorites UI
+
+DATA
+----
+data/destinations.json contains a starter local destination dataset. The main JS dataset contains additional records used by the interface.
+
+API INTEGRATION
+---------------
+Open-Meteo is used for Kampala weather on the home page and can be reused for destination weather using each destination's latitude/longitude.
+REST Countries helper is included for Uganda country reference information.
+
+FUNCTIONAL FEATURES
+-------------------
+- Destination search
+- Category filtering
+- Name/popularity sorting
+- Favorite saving/removal with localStorage
+- Responsive navigation with working hamburger menu
+- Destination detail-ready links
+- Weather API display with loading/error fallback
+- Empty search/favorites states
+
+RUNNING THE SITE
+----------------
+Because ES modules are used, open the project with a local web server rather than file://.
+Examples:
+1. VS Code + Live Server extension
+2. Python: python -m http.server 5500
+3. Node development server
+
+Then open http://localhost:5500/
+
+WIRE-FRAME MATCHING
+-------------------
+Desktop follows the proposal's wide layout with compact navigation, hero banner, four quick cards, four popular destination cards, weather/discovery row and dark footer.
+Mobile follows the proposal's phone layout with hamburger navigation, full-width hero image, search, 2x2 quick cards, compact destination rows and mobile-first spacing.
