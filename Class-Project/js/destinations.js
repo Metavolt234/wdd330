@@ -1,11 +1,89 @@
-export const destinations = [
-{id:'bwindi',name:'Bwindi Impenetrable National Park',short:'Bwindi Impenetrable',category:'national-park',region:'Southwest Uganda',rating:4.8,reviews:124,lat:-1.052,lon:29.716,description:'A remarkable forest destination known for mountain gorillas, rich biodiversity and guided nature experiences.',attractions:['Gorilla trekking','Forest walks','Bird watching'],tips:'Book gorilla trekking permits early and follow park guidance.'},
-{id:'murchison',name:'Murchison Falls National Park',short:'Murchison Falls',category:'national-park',region:'Northwest Uganda',rating:4.7,reviews:98,lat:2.274,lon:31.793,description:'Uganda’s largest national park, featuring the powerful Nile waterfall and diverse wildlife.',attractions:['Murchison Falls','Game drives','Boat safari'],tips:'Morning game drives and Nile boat trips are popular.'},
-{id:'bunyonyi',name:'Lake Bunyonyi',short:'Lake Bunyonyi',category:'lake',region:'Southwest Uganda',rating:4.6,reviews:76,lat:-1.283,lon:29.925,description:'A scenic highland lake surrounded by terraced hills and small islands.',attractions:['Canoeing','Island visits','Scenic viewpoints'],tips:'Enjoy a boat or canoe trip and allow time for the hillside views.'},
-{id:'queen',name:'Queen Elizabeth National Park',short:'Queen Elizabeth',category:'national-park',region:'Western Uganda',rating:4.7,reviews:103,lat:-0.15,lon:30.0,description:'A varied wildlife destination with savannah, crater lakes, forests and the Kazinga Channel.',attractions:['Game drives','Kazinga Channel','Nature walks'],tips:'Carry binoculars for wildlife and bird watching.'},
-{id:'kampala',name:'Kampala',short:'Kampala',category:'city',region:'Central Uganda',rating:4.5,reviews:89,lat:0.3476,lon:32.5825,description:'Uganda’s lively capital with cultural landmarks, markets, food and urban experiences.',attractions:['Gaddafi Mosque','Craft markets','Cultural sites'],tips:'Plan around traffic and explore different city neighborhoods.'},
-{id:'jinja',name:'Jinja',short:'Jinja',category:'outdoor',region:'Eastern Uganda',rating:4.6,reviews:91,lat:0.4479,lon:33.2026,description:'A popular adventure destination on the Nile with water activities and riverside experiences.',attractions:['Nile experiences','Adventure activities','Source of the Nile'],tips:'Choose activities from established operators and check conditions.'},
-{id:'kasubi',name:'Kasubi Tombs',short:'Kasubi Tombs',category:'cultural',region:'Kampala',rating:4.4,reviews:62,lat:0.332,lon:32.553,description:'A significant cultural site associated with the Buganda Kingdom and royal heritage.',attractions:['Cultural history','Architecture','Guided tours'],tips:'Dress respectfully and follow site photography guidance.'},
-{id:'rwenzori',name:'Rwenzori Mountains',short:'Rwenzori Mountains',category:'outdoor',region:'Western Uganda',rating:4.8,reviews:73,lat:0.37,lon:29.98,description:'Mountain landscapes, valleys and high-altitude hiking routes in western Uganda.',attractions:['Mountain hiking','Scenic valleys','Bird watching'],tips:'Use experienced guides and prepare for changing mountain weather.'}
-];
-export const getDestination=id=>destinations.find(d=>d.id===id);
+const CATEGORY_LABELS = {
+  Wildlife: "Wildlife & safari",
+  Nature: "Nature & adventure",
+  Culture: "Culture & city"
+};
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+export function renderDestinations(destinations, favorites, query, category, sort) {
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+  const visible = destinations.filter((destination) => {
+    const searchable = [destination.name, destination.region, destination.location, destination.description, ...destination.highlights]
+      .join(" ")
+      .toLocaleLowerCase();
+    return (category === "All" || destination.category === category) && searchable.includes(normalizedQuery);
+  });
+
+  if (sort === "name") visible.sort((a, b) => a.name.localeCompare(b.name));
+  if (sort === "region") visible.sort((a, b) => a.region.localeCompare(b.region) || a.name.localeCompare(b.name));
+
+  return visible.map((destination) => destinationCard(destination, favorites.has(destination.id))).join("");
+}
+
+function destinationCard(destination, isFavorite) {
+  const name = escapeHtml(destination.name);
+  const imageAlt = escapeHtml(destination.imageAlt);
+  const imageUrl = escapeHtml(destination.image);
+  const category = escapeHtml(CATEGORY_LABELS[destination.category] ?? destination.category);
+  const region = escapeHtml(destination.region);
+  const description = escapeHtml(destination.description);
+  const photoLabel = escapeHtml(destination.photoLabel);
+  return `
+    <article class="destination-card">
+      <div class="card-image-wrap">
+        <img class="card-image" src="${imageUrl}" alt="${imageAlt}" loading="lazy">
+        <span class="card-category">${category}</span>
+        <button class="favorite-button" type="button" data-favorite="${destination.id}" aria-label="${isFavorite ? "Remove" : "Save"} ${name} ${isFavorite ? "from" : "to"} saved places" aria-pressed="${isFavorite}">${isFavorite ? "♥" : "♡"}</button>
+        <span class="card-photo-label">${photoLabel}</span>
+      </div>
+      <div class="card-body">
+        <p class="card-location"><span aria-hidden="true">⌖</span> ${region}</p>
+        <h3>${name}</h3>
+        <p>${description}</p>
+        <div class="card-footer">
+          <span>${escapeHtml(destination.location)}</span>
+          <button type="button" data-details="${destination.id}" aria-label="View details for ${name}">Discover <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </article>`;
+}
+
+export function renderSavedPlaces(destinations, favorites) {
+  const saved = destinations.filter((destination) => favorites.has(destination.id));
+  if (saved.length === 0) {
+    return `<div class="saved-empty"><span aria-hidden="true">♡</span><p>Your saved list is waiting for its first adventure. Tap a heart on any destination to add it.</p></div>`;
+  }
+  return `<div class="saved-list">${saved.map((destination) => `
+    <article class="saved-item">
+      <img src="${escapeHtml(destination.image)}" alt="" loading="lazy">
+      <div><strong>${escapeHtml(destination.name)}</strong><small>${escapeHtml(destination.region)}</small></div>
+      <button type="button" data-favorite="${destination.id}" aria-label="Remove ${escapeHtml(destination.name)} from saved places">Remove</button>
+    </article>`).join("")}</div>`;
+}
+
+export function renderDestinationDetails(destination, isFavorite) {
+  const escape = escapeHtml;
+  return `
+    <img class="dialog-image" src="${escape(destination.image)}" alt="${escape(destination.imageAlt)}">
+    <div class="dialog-body">
+      <p class="card-location"><span aria-hidden="true">⌖</span> ${escape(destination.location)} · ${escape(destination.region)}</p>
+      <h2 id="dialog-title">${escape(destination.name)}</h2>
+      <span class="dialog-category">${escape(CATEGORY_LABELS[destination.category] ?? destination.category)}</span>
+      <p class="dialog-description">${escape(destination.description)}</p>
+      <h3 class="dialog-subheading">A few things to look forward to</h3>
+      <div class="dialog-tags">${destination.highlights.map((highlight) => `<span>${escape(highlight)}</span>`).join("")}</div>
+      <h3 class="dialog-subheading">Before you go</h3>
+      <p>${escape(destination.tips)}</p>
+      <p class="dialog-notice">Conditions and access can change. Check current information with official park authorities and local providers before travelling.</p>
+      <div class="dialog-actions"><button class="button" type="button" data-favorite="${destination.id}" aria-pressed="${isFavorite}">${isFavorite ? "♥ Saved to your places" : "♡ Save this place"}</button></div>
+    </div>`;
+}

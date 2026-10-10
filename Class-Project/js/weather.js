@@ -1,1 +1,24 @@
-export async function getWeather(lat,lon){const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=5`;const res=await fetch(url);if(!res.ok)throw new Error('Weather request failed');return res.json();}
+import { loadWeather } from "./api.js";
+import { getWeatherDescription } from "./ui.js";
+
+export async function showWeather(destination, resultElement) {
+  resultElement.innerHTML = `<p class="weather-loading" role="status">Checking the latest available conditions for ${destination.name}…</p>`;
+  try {
+    const response = await loadWeather(destination);
+    const current = response.current;
+    if (!current || typeof current.temperature_2m !== "number" || typeof current.weather_code !== "number") {
+      throw new Error("The forecast response did not include current conditions.");
+    }
+    const time = current.time ? new Date(current.time).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "latest available";
+    resultElement.innerHTML = `
+      <span class="weather-placeholder-icon" aria-hidden="true">☼</span>
+      <p><strong>${Math.round(current.temperature_2m)}°C</strong> ${getWeatherDescription(current.weather_code)} in ${destination.name}
+        <span class="weather-detail">Feels like ${Math.round(current.apparent_temperature)}°C · Wind ${Math.round(current.wind_speed_10m)} km/h · Updated ${time}</span>
+      </p>`;
+  } catch (error) {
+    const message = error.name === "AbortError"
+      ? "The weather request took too long. Please try again."
+      : "Weather is temporarily unavailable. Please check your connection and try again.";
+    resultElement.innerHTML = `<p class="weather-error" role="alert">${message}</p>`;
+  }
+}
