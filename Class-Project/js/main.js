@@ -184,27 +184,3 @@ loadCountryInfo()
   });
 
 start();
-
-
-// Booking/contact form: opens the visitor's email application with the enquiry addressed to the email they enter.
-document.querySelector("#booking-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!form.reportValidity()) return;
-  const data = new FormData(form);
-  const recipient = String(data.get("recipientEmail") || "").trim();
-  const senderEmail = String(data.get("senderEmail") || "").trim();
-  const name = String(data.get("name") || "").trim();
-  const destination = String(data.get("destination") || "").trim() || "Not specified";
-  const travelDate = String(data.get("travelDate") || "").trim() || "Flexible / not specified";
-  const message = String(data.get("message") || "").trim();
-  const subject = `Uganda travel booking enquiry from ${name}`;
-  const body = [
-    "Hello,", "", "I would like to make a travel booking enquiry.", "",
-    `Name: ${name}`, `Reply email: ${senderEmail}`, `Destination: ${destination}`,
-    `Preferred travel date: ${travelDate}`, "", "Message:", message
-  ].join("\n");
-  const mailto = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.querySelector("#contact-feedback").textContent = "Your email app should open with the booking enquiry prepared. Review it and press Send to deliver it.";
-  window.location.href = mailto;
-});

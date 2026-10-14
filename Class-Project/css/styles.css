@@ -225,21 +225,3 @@ h1 em, h2 em { font-family: var(--serif); font-weight: 400; }
 .dialog-actions .button { color: white; background: var(--forest); }
 .toast { position: fixed; z-index: 30; right: 22px; bottom: 22px; max-width: min(360px, calc(100% - 44px)); padding: 13px 17px; color: white; background: #17382f; border-left: 3px solid var(--gold); border-radius: 3px; box-shadow: 0 8px 30px rgba(0,0,0,.2); font-size: 11px; line-height: 1.6; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity .2s, transform .2s; }
 .toast.visible { opacity: 1; transform: translateY(0); }
-
-
-/* Contact and booking enquiry section */
-.contact-section { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(28px, 6vw, 80px); padding-block: 88px; align-items: start; }
-.contact-copy h2 { margin: 16px 0; color: var(--forest); font-family: var(--display); font-size: clamp(35px, 4.5vw, 54px); font-weight: 600; letter-spacing: -.06em; line-height: 1.08; }
-.contact-copy h2 em { color: var(--green); }
-.contact-copy > p:not(.eyebrow) { color: #667068; font-size: 12px; line-height: 1.9; }
-.contact-copy .contact-note { margin-top: 20px; padding-left: 13px; border-left: 2px solid var(--gold); font-size: 10px !important; }
-.contact-form { padding: clamp(20px, 3vw, 32px); background: white; border: 1px solid var(--line); box-shadow: 0 15px 45px rgba(23,63,53,.06); }
-.contact-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
-.form-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 17px; }
-.form-field label { color: var(--forest); font-size: 10px; font-weight: 700; }
-.form-field input, .form-field textarea { width: 100%; min-width: 0; padding: 12px 13px; color: var(--ink); background: #fcfcf9; border: 1px solid #dfe5dc; border-radius: 2px; outline: none; font: inherit; font-size: 11px; }
-.form-field input:focus, .form-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,104,82,.1); }
-.form-field textarea { min-height: 120px; resize: vertical; line-height: 1.7; }
-.contact-submit { min-height: 44px; }
-.contact-feedback { margin: 12px 0 0; color: var(--green); font-size: 10px; line-height: 1.6; }
-@media (max-width: 640px) { .contact-section { grid-template-columns: 1fr; gap: 23px; padding-block: 62px; } .contact-form-grid { grid-template-columns: 1fr; gap: 0; } .contact-form { padding: 19px; } }
