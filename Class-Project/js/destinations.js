@@ -81,7 +81,7 @@ export function renderDestinationDetails(destination, isFavorite) {
       <p class="dialog-description">${escape(destination.description)}</p>
       <h3 class="dialog-subheading">A few things to look forward to</h3>
       <div class="dialog-tags">${destination.highlights.map((highlight) => `<span>${escape(highlight)}</span>`).join("")}</div>
-      <h3 class="dialog-subheading">Weather &amp; climate outlook</h3>\n      <div class="destination-weather weather-result" data-destination-weather="${escape(destination.id)}" aria-live="polite"><p>Loading local weather…</p></div>\n      <h3 class="dialog-subheading">Before you go</h3>
+      <h3 class="dialog-subheading">Before you go</h3>
       <p>${escape(destination.tips)}</p>
       <p class="dialog-notice">Conditions and access can change. Check current information with official park authorities and local providers before travelling.</p>
       <div class="dialog-actions"><button class="button" type="button" data-favorite="${destination.id}" aria-pressed="${isFavorite}">${isFavorite ? "♥ Saved to your places" : "♡ Save this place"}</button></div>

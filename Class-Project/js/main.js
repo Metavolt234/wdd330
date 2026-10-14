@@ -26,7 +26,7 @@ function renderCatalog() {
   savedPanel.innerHTML = renderSavedPlaces(destinations, favorites);
   document.querySelector(".saved-count").textContent = String(favorites.size);
   document.querySelector(".saved-count").setAttribute("aria-label", `${favorites.size} saved ${favorites.size === 1 ? "place" : "places"}`);
-  populateWeatherSelect();\n  populateTripDestination();
+  populateWeatherSelect();
 }
 
 function populateWeatherSelect() {
@@ -34,20 +34,6 @@ function populateWeatherSelect() {
   const selectedId = select.value;
   select.innerHTML = `<option value="">Select a place</option>${destinations.map((place) => `<option value="${place.id}">${place.name}</option>`).join("")}`;
   if (destinations.some((place) => place.id === selectedId)) select.value = selectedId;
-}
-
-function populateTripDestination() {
-  const select = document.querySelector("#trip-destination");
-  const selectedId = select.value;
-  select.innerHTML = `<option value="">Choose a place</option>${destinations.map((place) => `<option value="${place.id}">${escapeHtml(place.name)}</option>`).join("")}`;
-  if (destinations.some((place) => place.id === selectedId)) select.value = selectedId;
-}
-
-function openDestinationDetails(destination) {
-  dialogContent.innerHTML = renderDestinationDetails(destination, favorites.has(destination.id));
-  dialog.showModal();
-  const weatherPanel = dialogContent.querySelector("[data-destination-weather]");
-  if (weatherPanel) showWeather(destination, weatherPanel);
 }
 
 function toggleFavorite(id) {
@@ -66,7 +52,7 @@ function toggleFavorite(id) {
   }
   renderCatalog();
   if (dialog.open) {
-    dialogContent.innerHTML = renderDestinationDetails(destination, favorites.has(id));\n    const weatherPanel = dialogContent.querySelector("[data-destination-weather]");\n    if (weatherPanel) showWeather(destination, weatherPanel);
+    dialogContent.innerHTML = renderDestinationDetails(destination, favorites.has(id));
   }
 }
 
@@ -152,7 +138,8 @@ document.addEventListener("click", (event) => {
   if (detailsButton) {
     const destination = destinations.find((place) => place.id === detailsButton.dataset.details);
     if (!destination) return;
-    openDestinationDetails(destination);
+    dialogContent.innerHTML = renderDestinationDetails(destination, favorites.has(destination.id));
+    dialog.showModal();
   }
 });
 
@@ -197,50 +184,3 @@ loadCountryInfo()
   });
 
 start();
-
-// Trip planner validates the selected place and dates, then prepares a local trip summary.
-const tripForm = document.querySelector("#trip-form");
-tripForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const formData = new FormData(tripForm);
-  const start = String(formData.get("start"));
-  const end = String(formData.get("end"));
-  const feedback = document.querySelector("#trip-form-feedback");
-  if (end < start) {
-    feedback.textContent = "Please choose an end date that is on or after the start date.";
-    document.querySelector("#trip-end").setCustomValidity("End date must be on or after start date.");
-    document.querySelector("#trip-end").reportValidity();
-    return;
-  }
-  document.querySelector("#trip-end").setCustomValidity("");
-  const destination = destinations.find((place) => place.id === formData.get("destination"));
-  if (!destination) {
-    feedback.textContent = "Please choose a destination.";
-    return;
-  }
-  const summary = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    destination: destination.name,
-    start,
-    end,
-    interest: formData.get("interest"),
-    notes: formData.get("notes"),
-    createdAt: new Date().toISOString()
-  };
-  try {
-    const savedPlans = JSON.parse(localStorage.getItem("uganda-travel-plans") || "[]");
-    savedPlans.push(summary);
-    localStorage.setItem("uganda-travel-plans", JSON.stringify(savedPlans));
-    feedback.textContent = `Trip plan created for ${destination.name} (${start} to ${end}) and saved in this browser. This demo form does not send an email or book travel.`;
-    tripForm.reset();
-  } catch {
-    feedback.textContent = "Your plan is ready, but this browser could not save it. Please copy your trip details before leaving.";
-  }
-});
-document.querySelector("#trip-start").min = new Date().toISOString().slice(0, 10);
-document.querySelector("#trip-start").addEventListener("change", (event) => {
-  const endInput = document.querySelector("#trip-end");
-  endInput.min = event.target.value;
-  if (endInput.value && endInput.value < event.target.value) endInput.value = event.target.value;
-});
