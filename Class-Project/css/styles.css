@@ -227,35 +227,19 @@ h1 em, h2 em { font-family: var(--serif); font-weight: 400; }
 .toast.visible { opacity: 1; transform: translateY(0); }
 
 
-/* Trip planner and destination-specific forecast */
-.trip-planner { display:grid; grid-template-columns:.8fr 1.2fr; gap:8%; padding-block:90px; border-top:1px solid var(--line); }
-.trip-planner-intro h2 { margin-top:16px; }
-.trip-planner-intro > p:last-child { color:#68736a; font-size:12px; line-height:1.9; }
-.trip-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; padding:25px; background:#f7f7f1; border:1px solid #e4e8df; }
-.form-field { display:flex; flex-direction:column; gap:7px; }
-.form-field label { color:var(--forest); font-size:10px; font-weight:700; }
-.form-field input,.form-field select,.form-field textarea { width:100%; min-width:0; padding:11px 12px; color:var(--ink); background:white; border:1px solid #dce2d8; border-radius:2px; font:inherit; font-size:11px; }
-.form-field input:focus,.form-field select:focus,.form-field textarea:focus { outline:2px solid #9bad8c; outline-offset:1px; }
-.form-field-wide { grid-column:1/-1; }
-.form-consent label { display:flex; align-items:flex-start; gap:9px; color:#677268; font-size:10px; line-height:1.6; }
-.form-consent input { width:auto; margin-top:2px; }
-.form-feedback { margin:10px 0 0; color:var(--forest); font-size:11px; line-height:1.6; }
-.destination-weather { display:block; margin-top:10px; }
-.weather-current { display:flex; align-items:center; gap:13px; }
-.forecast-heading { margin:18px 0 10px; color:var(--forest); font-family:var(--display); font-size:14px; }
-.forecast-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
-.forecast-day { display:flex; flex-direction:column; gap:6px; min-width:0; padding:10px 8px; background:#f4f6f0; border:1px solid #e4e9df; }
-.forecast-day span { color:#68736a; font-size:10px; }
-.forecast-day strong { color:var(--forest); font-size:12px; }
-.forecast-day small { color:#748076; font-size:9px; line-height:1.5; }
-.climate-note { margin-top:14px !important; padding:12px; color:#6b624a !important; background:#f8f3e7; border-left:2px solid var(--gold); font-size:10px !important; line-height:1.7 !important; }
-@media (max-width:760px) {
- .trip-planner { grid-template-columns:1fr; gap:25px; padding-block:60px; }
- .trip-form { padding:17px; }
- .forecast-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-@media (max-width:420px) {
- .trip-form { grid-template-columns:1fr; }
- .form-field-wide { grid-column:auto; }
- .forecast-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
+/* Contact and booking enquiry section */
+.contact-section { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(28px, 6vw, 80px); padding-block: 88px; align-items: start; }
+.contact-copy h2 { margin: 16px 0; color: var(--forest); font-family: var(--display); font-size: clamp(35px, 4.5vw, 54px); font-weight: 600; letter-spacing: -.06em; line-height: 1.08; }
+.contact-copy h2 em { color: var(--green); }
+.contact-copy > p:not(.eyebrow) { color: #667068; font-size: 12px; line-height: 1.9; }
+.contact-copy .contact-note { margin-top: 20px; padding-left: 13px; border-left: 2px solid var(--gold); font-size: 10px !important; }
+.contact-form { padding: clamp(20px, 3vw, 32px); background: white; border: 1px solid var(--line); box-shadow: 0 15px 45px rgba(23,63,53,.06); }
+.contact-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+.form-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 17px; }
+.form-field label { color: var(--forest); font-size: 10px; font-weight: 700; }
+.form-field input, .form-field textarea { width: 100%; min-width: 0; padding: 12px 13px; color: var(--ink); background: #fcfcf9; border: 1px solid #dfe5dc; border-radius: 2px; outline: none; font: inherit; font-size: 11px; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,104,82,.1); }
+.form-field textarea { min-height: 120px; resize: vertical; line-height: 1.7; }
+.contact-submit { min-height: 44px; }
+.contact-feedback { margin: 12px 0 0; color: var(--green); font-size: 10px; line-height: 1.6; }
+@media (max-width: 640px) { .contact-section { grid-template-columns: 1fr; gap: 23px; padding-block: 62px; } .contact-form-grid { grid-template-columns: 1fr; gap: 0; } .contact-form { padding: 19px; } }
